@@ -16,6 +16,7 @@ const app = express();
 const port = process.env.PORT || 5002;
 
 app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -25,7 +26,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error({ message: err.message, code: err.name, name: err.stack });
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  return res.status(err.status).json({ message: err.message, code: err.code });
+  return res.status(500).json({ message: err.message, code: err.code });
 });
 
 // Security

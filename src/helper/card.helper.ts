@@ -40,13 +40,7 @@ export default class CreditCardGenerator {
     },
   ];
 
-  public static generateSingle(vendor: CreditCardVendor): ICreditCardDetails {
-    if (!this.creditCardPresets[vendor]) {
-      throw new Error(
-        "[CreditCardGenerator] Unknown credit card vendor '" + vendor + "'"
-      );
-    }
-
+  public static generateSingle(vendor: string): ICreditCardDetails {
     const expireDetails = this.generateExpiryDate();
 
     return {
@@ -58,7 +52,7 @@ export default class CreditCardGenerator {
   }
 
   public static generateMultiple(
-    vendor: CreditCardVendor,
+    vendor: string,
     count: number
   ): any[] {
     if (!this.creditCardPresets[vendor]) {
@@ -140,17 +134,25 @@ export default class CreditCardGenerator {
     for (let i = 0; i < 3; i++) {
       cvvNumber += Math.floor(Math.random() * 10);
     }
-    const oddDigits = cvvNumber.split('').filter((_, index) => index % 2 !== 0);
-    const doubleOddDigits = oddDigits.map((digit) => parseInt(digit) * 2);
-    const sumOfDigits = doubleOddDigits.reduce((sum, digit) => {
-      if (digit < 10) {
-        return sum + digit;
-      } else {
-        return sum + Math.floor(digit / 10) + (digit % 10);
-      }
-    }, 0);
-    const checkDigit = (10 - (sumOfDigits % 10)) % 10;
-    cvvNumber = `${checkDigit}`
+    // const oddDigits = cvvNumber.split('').filter((_, index) => index % 2 !== 0);
+    // const doubleOddDigits = oddDigits.map((digit) => parseInt(digit) * 2);
+
+    // const sumOfDigits = doubleOddDigits.reduce((sum, digit) => {
+    //   if (digit < 10) {
+    //         console.log(sum + digit);
+
+    //     return sum + digit;
+    //   } else {
+    //                 console.log(
+    //                   sum + Math.floor(digit / 10) + (digit % 10)
+    //                 );
+
+    //     return sum + Math.floor(digit / 10) + (digit % 10);
+    //   }
+    // }, 0);
+    // const checkDigit = (10 - (sumOfDigits % 10)) % 10;
+    // console.log({ checkDigit });
+    // cvvNumber = `${checkDigit}`
 
     return cvvNumber;
   }
